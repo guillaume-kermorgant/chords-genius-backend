@@ -1,0 +1,25 @@
+[
+    {
+        "track": "Little Wing",
+        "artist": "Jimi Hendrix",
+        "trackKeyword": "little wing",
+        "artistKeyword": "jimi hendrix",
+        "key": "Em",
+        "bpm": "71",
+        "camelot": "2B",
+        "chordsSequence": ["Em", "G", "Am", "Em", "Bm7/Bbm7", "Am7/C", "G/F", "C/D", "D/rest", "rest"],
+        "info": "Jimi tuned his guitar one half step below standard EADGBE tuning for this song, so if you wanna play along with him, just tune every string down a half step."
+    },
+    {
+        "track": "Stand By Me",
+        "artist": "Ben E. King",
+        "trackKeyword": "stand by me",
+        "artistKeyword": "ben e. king",
+        "key": "A",
+        "bpm": "118",
+        "camelot": "11B",
+        "chordsSequence": ["A", "A", "F#m", "F#m", "D", "E", "A", "A"],
+        "info": "When the night, has come..."
+    }
+
+]

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+SCRIPT_PATH=$(dirname "$0")
+source "${SCRIPT_PATH}/../.env"
+ELASTICSEARCH_URL="http://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"
+TRACKS_FILE="${SCRIPT_PATH}/../resources/tracks.json"
+MAPPINGS_FILE="${SCRIPT_PATH}/index_mappings.json"
+
+echo "Preloading data into ElasticSearch..."
+echo "Tracks data file path: ${TRACKS_FILE}"
+echo "ElasticSearch URL: ${ELASTICSEARCH_URL}"
+
+echo "Creating ElasticSearch index \"${ELASTICSEARCH_TRACKS_INDEX}\"..."
+mappingsObject=$(cat "${MAPPINGS_FILE}" | jq .tracks)
+echo "Mappings: \"${mappingsObject}\""
+mappingsObjectString=$(echo "${mappingsObject}" | jq tojson)
+createIndexError=$(curl -H "Content-Type: application/json" -XPUT \
+    "${ELASTICSEARCH_URL}/${ELASTICSEARCH_TRACKS_INDEX}" -d "${mappingsObject}" | jq .error)
+
+if [[ -n "${createIndexError}" && "${createIndexError}" != "null" ]]; then
+    echo "Error when creating index: ${createIndexError}";
+    echo "Still trying to index documents..."
+fi
+
+jq -c '.[]' "${TRACKS_FILE}" | while read trackJSONObject; do
+    curl -H "Content-Type: application/json" -X POST \
+    "${ELASTICSEARCH_URL}/${ELASTICSEARCH_TRACKS_INDEX}/_doc" -d "${trackJSONObject}"
+done

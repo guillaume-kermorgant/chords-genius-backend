@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SCRIPT_PATH=$(dirname "$0")
+source "${SCRIPT_PATH}/../.env"
+ELASTICSEARCH_URL="http://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"
+
+echo "Getting mappings for index: ${ELASTICSEARCH_TRACKS_INDEX}..."
+curl "${ELASTICSEARCH_URL}/${ELASTICSEARCH_TRACKS_INDEX}/_mapping" | jq .
+
+# echo "Documents of index: ${ELASTICSEARCH_TRACKS_INDEX}..."
+# curl "${ELASTICSEARCH_URL}/${ELASTICSEARCH_TRACKS_INDEX}/_search" | jq .

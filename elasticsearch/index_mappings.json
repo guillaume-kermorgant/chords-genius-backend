@@ -1,0 +1,10 @@
+{
+    "tracks" : {
+        "mappings" : {
+            "properties" : {
+                "trackKeyword" : { "type" : "keyword" },
+                "artistKeyword" : { "type" : "keyword" }
+            }
+        }
+    }
+}

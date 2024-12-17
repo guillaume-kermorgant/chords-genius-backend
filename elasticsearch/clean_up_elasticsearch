@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SCRIPT_PATH=$(dirname "$0")
+source "${SCRIPT_PATH}/../.env"
+TRACKS_FILE="${SCRIPT_PATH}/../resources/tracks.json"
+ELASTICSEARCH_URL="http://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"
+
+echo "Deleting tracks index..."
+echo "ElasticSearch URL: ${ELASTICSEARCH_URL}"
+
+curl -X DELETE "${ELASTICSEARCH_URL}/${ELASTICSEARCH_TRACKS_INDEX}"

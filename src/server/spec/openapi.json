@@ -1,0 +1,166 @@
+{
+    "openapi": "7.10.1",
+    "info": {
+      "title": "Chords Genius API",
+      "version": "0.0.1"
+    },
+    "servers": [
+      {
+        "url": "/api/v1"
+      }
+    ],
+    "paths": {
+      "/chords": {
+        "get": {
+          "tags": [
+            "CHORDS"
+          ],
+          "summary": "Get Chords and other complementary information (key, bpm, camelot value, compatible key and compatible chords) for input song",
+          "parameters": [
+            {
+                "name": "artist",
+                "in": "query",
+                "description": "artist name",
+                "schema": {
+                    "type": "string"
+                }
+            },
+            {
+              "name": "track",
+              "in": "query",
+              "description": "track name",
+              "schema": {
+                  "type": "string"
+              }
+            },
+            {
+              "name": "key",
+              "in": "query",
+              "description": "key (e.g. D#, C Minor...)",
+              "schema": {
+                  "type": "string"
+              }
+          }
+          ],
+          "responses": {
+            "200": {
+              "description": "Chords and key",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Chords"
+                  }
+                }
+              }
+            },
+            "default": {
+              "$ref": "#/components/responses/FindChordsErrors"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+        "responses": {
+            "FindChordsErrors": {
+                "description": "Chould not find chords.",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/Error"
+                    }
+                  }
+                }
+              }
+            },
+            "schemas": {
+                "Error": {
+                    "type": "object",
+                    "required": [
+                      "name",
+                      "message",
+                      "errors"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "errors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object"
+                        }
+                      }
+                    }
+                  },
+                "Chords": {
+                    "type": "object",
+                    "required": [
+                        "song"
+                    ],
+                    "properties": {
+                        "search": {
+                            "type": "string"
+                        },
+                        "key": {
+                            "type": "string"
+                        },
+                        "camelot": {
+                          "type": "string"
+                        },
+                        "bpm": {
+                          "type": "string"
+                        },
+                        "artist": {
+                          "type": "string"
+                        },
+                        "track": {
+                          "type": "string"
+                        },
+                        "chords": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                        },
+                        "mode": {
+                          "type": "string"
+                        },
+                        "playableChords": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                        },
+                        "chordsSequence": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                        },
+                        "info": {
+                          "type": "string"
+                        },
+                        "compatibleKey": {
+                          "type": "string"
+                        },
+                        "compatibleChords": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                        }
+                    }
+                }
+            }
+        }
+    }

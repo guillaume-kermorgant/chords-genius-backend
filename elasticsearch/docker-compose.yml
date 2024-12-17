@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  chords-genius-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: chords-genius-elasticsearch
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - chords-genius-esdata1:/usr/share/elasticsearch/data:rw
+    ports:
+      - ${CHORDS_GENIUS_ELASTICSEARCH_PORT}:${CHORDS_GENIUS_ELASTICSEARCH_PORT}
+    restart: unless-stopped
+volumes:
+  chords-genius-esdata1:
+    driver: local
